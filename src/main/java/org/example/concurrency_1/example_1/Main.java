@@ -1,4 +1,4 @@
-package org.example.concurrency_1;
+package org.example.concurrency_1.example_1;
 
 public class Main {
     public static void main(String[] args) {
