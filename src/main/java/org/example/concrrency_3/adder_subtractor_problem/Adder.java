@@ -7,8 +7,8 @@ public class Adder implements Runnable{
     }
     @Override
     public void run() {
-        for(int i=0;i<1000;i++){
-          //  System.out.println("increment");
+        for(int i=0;i<10000;i++){
+           //System.out.println("increment");
             count.num++;
         }
        System.out.println("add Final Num value:"+count.num);
