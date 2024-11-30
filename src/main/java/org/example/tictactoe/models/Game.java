@@ -2,6 +2,8 @@ package org.example.tictactoe.models;
 
 import org.example.generics_1.Pair;
 import org.example.tictactoe.exceptions.InvalidBotCountException;
+import org.example.tictactoe.strategies.winning_strategy.OrderOneWinningStrategy;
+import org.example.tictactoe.strategies.winning_strategy.PlayerWonStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Game {
     private int currentPlayerIdx;
     private GameStatus gameStatus;
     private List<Move> moves;
+    private PlayerWonStrategy playerWonStrategy;
 
     private Game(GameBuilder gameBuilder){
         this.players=gameBuilder.players;
@@ -21,6 +24,7 @@ public class Game {
         this.currentPlayerIdx=0;
         this.moves=new ArrayList<>();
         this.gameStatus=GameStatus.IN_PROGRESS;
+        playerWonStrategy=new OrderOneWinningStrategy(n+1);
     }
 
     public static GameBuilder getBuilder(){
@@ -59,20 +63,24 @@ public class Game {
         this.board.setPlayer(pair.getKey(),pair.getValue(),player);
         Move move=new Move(player,this.board.getCell(pair.getKey(),pair.getValue()));
         this.moves.add(move);
+        Cell cell1=this.board.getCell(pair.getKey(),pair.getValue());
         //check if someone has won
-        if(checkIfWon()){
+        if(playerWonStrategy.checkIfWon(cell1)){
             this.gameStatus=GameStatus.WON;
             return ;
         }
         if(moves.size()==(players.size()+1) * (players.size()+1)){
             this.gameStatus=GameStatus.DRAW;
+            return;
         }
         this.currentPlayerIdx=(this.currentPlayerIdx+1) % this.players.size();
+
     }
 
-    private boolean checkIfWon() {
-        return true;
+    public Player getWinner() {
+        return this.players.get(currentPlayerIdx);
     }
+
 
     public static class GameBuilder{
         private List<Player> players;

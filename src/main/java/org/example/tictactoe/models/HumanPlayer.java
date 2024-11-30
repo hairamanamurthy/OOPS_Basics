@@ -13,7 +13,8 @@ public class HumanPlayer extends Player{
     @Override
     Pair<Integer,Integer> makeMove() {
         Scanner scanner=new Scanner(System.in);
-        System.out.println("Enter x:");
+
+        System.out.println("It's "+ getName() +"'s turn Enter x:");
         int x=scanner.nextInt();
         System.out.println("Enter y:");
         int y=scanner.nextInt();
